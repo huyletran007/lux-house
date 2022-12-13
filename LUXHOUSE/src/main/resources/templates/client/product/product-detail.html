@@ -1,0 +1,154 @@
+<!-- Start main -->
+<div class="breadcrumd-1 container">
+    <!-- breadcrumd -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item" aria-current="page">Library</li>
+        </ol>
+    </nav>
+</div>
+<!-- Start PRODUCT-DETAIL -->
+<div class="product-detail-form container d-flex flex-wrap justify-content-center">
+    <!-- PRODUCT-DETAIL-LEFT -->
+    <div class="detail-left ">
+        <div class="product-imgs">
+            <div class="img-display">
+                <div class="img-showcase">
+                    <img class="img1" th:src="@{${'/image/' + content.objs.products.image}}" alt="Furniture">
+                    <div th:each="p: ${content.objs.productImages}">
+                        <img class="img1" th:src="@{|/image/${p.image}|}" alt="Furniture" style="width: auto;">
+                    </div>
+                </div>
+            </div>
+            <div class="img-select">
+                <div class="img-item">
+                    <a href="#" data-id="1">
+                        <img class="img2" th:src="@{${'/image/' + content.objs.products.image}}" alt="Furniture">
+                    </a>
+                </div>
+                <div th:each="p, rowStat: ${content.objs.productImages}">
+                    <div class="img-item">
+                        <a href="#" th:attr="data-id=${rowStat.index + 2}">
+                            <img class="img2" th:src="@{|/image/${p.image}|}" alt="Furniture" style="width: auto;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PRODUCT-DETAIL-RIGHT -->
+    <div class="detail-right" id="product-detail-js">
+        <div class="right-new">NEW</div>
+        <div class="right-name" style="display: none;" id="productId">[[${content.objs.products.id}]]</div>
+        <div class="right-name">[[${content.objs.products.productName}]]</div>
+        <div class="right-price">[[${#numbers.formatDecimal(content.objs.products.price,0,'COMMA',0,'POINT')}]] đ</div>
+        <div class="right-qty">
+            <div class="qty-name">Quantity</div>
+            <div class="qty-sl">
+                <div class="counter">
+                    <span class="down" onClick='decreaseCount(event, this)'>-</span>
+                    <input type="text" value="1" id="quantityP">
+                    <span class="up" onClick='increaseCount(event, this)'>+</span>
+                </div>
+            </div>
+        </div>
+        <div class="right-btn">
+        <button type="button" class="btn1" id="add-btn" onclick="addProductToCart()">Add to cart</button>
+        </div>
+        <div class="right-according">
+            <button class="accordion1">Desciption 1</button>
+            <div class="panel">
+                <p>
+                    [[${content.objs.products.id}]]
+                </p>
+            </div>
+
+            <button class="accordion1">Desciption 2</button>
+            <div class="panel">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque eveniet
+                    deleniti id, tenetur ullam ipsam vitae sunt, laudantium temporibus
+                    consequatur architecto a magni sit tempora ea error veritatis aperiam.
+                    Illum.
+                </p>
+            </div>
+
+            <button class="accordion1">Desciption 3</button>
+            <div class="panel">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque eveniet
+                    deleniti id, tenetur ullam ipsam vitae sunt, laudantium temporibus
+                    consequatur architecto a magni sit tempora ea error veritatis aperiam.
+                    Illum.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="idProduct-js" style="display: none;">[[${content.objs.products.id}]]</div>
+</div>
+<hr>
+    <!-- START COMMENT -->
+    <section style="background-color: #eee;">
+  <div class="container my-5 py-5 container-comment">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 col-lg-10 col-xl-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-start align-items-center">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="avatar" width="60"
+                height="60" />
+              <div>
+                <h6 class="fw-bold text-primary mb-1">Lily Coleman</h6>
+                <p class="text-muted small mb-0">
+                  Shared publicly - Jan 2020
+                </p>
+              </div>
+            </div>
+
+            <p class="mt-3 mb-4 pb-2">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip consequat.
+            </p>
+
+            <div class="small d-flex justify-content-start">
+              <a href="#!" class="d-flex align-items-center me-3">
+                <i class="far fa-thumbs-up me-2"></i>
+                <p class="mb-0">Like</p>
+              </a>
+              <a href="#!" class="d-flex align-items-center me-3">
+                <i class="far fa-comment-dots me-2"></i>
+                <p class="mb-0">Comment</p>
+              </a>
+              <a href="#!" class="d-flex align-items-center me-3">
+                <i class="fas fa-share me-2"></i>
+                <p class="mb-0">Share</p>
+              </a>
+            </div>
+          </div>
+          <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+            <div class="d-flex flex-start w-100">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="avatar" width="40"
+                height="40" />
+              <div class="form-outline w-100">
+                <textarea class="form-control" id="textAreaExample" rows="4"
+                  style="background: rgb(255, 255, 255);"></textarea>
+                <label class="form-label" for="textAreaExample">Message</label>
+              </div>
+            </div>
+            <div class="float-end mt-2 pt-1">
+              <button type="button" class="btn btn-primary btn-sm btn-comment">Post comment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END COMMENT -->
+<hr>
+<!-- End PRODUCT-DETAIL -->
+<!-- End main -->

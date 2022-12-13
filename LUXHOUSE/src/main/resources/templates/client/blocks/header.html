@@ -1,0 +1,126 @@
+<!-- Start Header -->
+<div class="index_header" ng-app="myApp" ng-controller="myController">
+    <div id="sticky">
+        <div class="header_a">
+            <div class="row align-items-start text-center align-items-center">
+                <div class="col-3">
+                    <div class="home">
+                        <!---->
+                        <div class="brand-and-icon">
+                            <button type="button" class="navbar-toggler">
+                                <i class="fas fa-bars" style="font-size: 40px;"></i>
+                            </button>
+                        </div>
+                        <!---->
+                    </div>
+                    <a href="/products" class="navbar-collapse" id="text_1">INSPIRATION</a>
+                </div>
+                <div class="col-6" style="font-family: proxima-nova,Arial,sans-serif;">
+                    <a href="/home" id="text_2">LUXHOUSE</a>
+                </div>
+                <div class="col-3">
+                    <div class="row d-flex">
+                        <div class="col-1">
+                            <button class="search" type="button" onclick="searchPDM()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg></button>
+                                
+                        </div>
+                        <div class="col-1">
+                            $
+                        </div>
+                        <div class="col-1">
+                            <div class="dropdown-user">
+                                <!-- [[${#request.remoteUser}]] -->
+                                <button class="user-drop"><i class="far fa-user user-drop"></i></button>
+                                <div class="dropdown-content">
+                                    <a th:if="${#request.remoteUser == null}" href="/users/login">Đăng nhập</a>
+                                    <a th:if="${#request.remoteUser != null}" href="/account/profile">Tài khoản</a>
+                                    <a th:if="${#request.remoteUser != null}" href="/account/logout">Đăng xuất</a>
+                                    <a href="#">Kiểm tra đơn hàng</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="main-wrapper">
+                                <div class="card-wrapper">
+                                    <div class="icon-section">
+                                        <div class='cart-wrapper'>
+                                            <div class="cart">
+                                                <button class="btn-cart" id="cart">
+                                                    <ion-icon name="cart-outline"></ion-icon>
+                                                </button>
+                                            </div>
+                                            <div class="cart-badge"><span id="cart-count" class="totalQty">0</span></div>
+                                            <div class="box" id="box">
+                                                <ion-icon name="cube-outline"></ion-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- start cart -->
+                            <div class="container">
+                                <div class="shopping-cart">
+                                    <div class="shopping-cart-header">
+                                        <i class="fa fa-shopping-cart cart-icon"></i><span class="badge" id="totalQty">0</span>
+                                        <div class="shopping-cart-total">
+                                            <span class="lighter-text">Total:</span>
+                                            <span class="main-color-text" id="totalPrice">0</span>
+                                        </div>
+                                    </div>
+                                    <!--end shopping-cart-header -->
+
+                                    <ul class="shopping-cart-items" id="cart-user-load">
+                                        <!-- <li class="clearfix">
+                                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg"
+                                                alt="item1" />
+                                            <span class="item-name">Sony DSC-RX100M III</span>
+                                            <span class="item-price">$849.99</span>
+                                            <span class="item-quantity">Quantity: 01</span>
+                                        </li> -->
+
+                                        <!-- <li class="clearfix">
+                                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg"
+                                                alt="item1" />
+                                            <span class="item-name">KS Automatic Mechanic...</span>
+                                            <span class="item-price">$1,249.99</span>
+                                            <span class="item-quantity">Quantity: 01</span>
+                                        </li>
+
+                                        <li class="clearfix">
+                                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item3.jpg"
+                                                alt="item1" />
+                                            <span class="item-name">Kindle, 6" Glare-Free To...</span>
+                                            <span class="item-price">$129.99</span>
+                                            <span class="item-quantity">Quantity: 01</span>
+                                        </li> -->
+                                    </ul>
+
+                                    <a href="/CartDetail" class="button">View cart</a>
+                                </div>
+                                <!--end shopping-cart -->
+                            </div>
+                            <!-- end cart -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div class="main-wrapper">
+            <nav class="navbar navbar-expand-lg">
+                <div class="navbar-collapse" id="navbar-center">
+                    <ul class="navbar-nav" id="category-js">
+                        
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div style="display: none;" id="userId">[[${#request.remoteUser}]]</div>
+</div>
+<!-- <input th:if="${#request.remoteUser}" type="hidden" id="idCustomer" th:value="${#request.remoteUser.id}"> -->
+<!-- End Header -->
