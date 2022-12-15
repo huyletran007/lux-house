@@ -2,12 +2,15 @@ package com.luxhouse.main.controller.rest;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.luxhouse.main.common.APIResponse;
 import com.luxhouse.main.domain.Categories;
 import com.luxhouse.main.domain.Products;
 import com.luxhouse.main.domain.Users;
 import com.luxhouse.main.exception.NotFoundEx;
 import com.luxhouse.main.exception.NotYetImplementedEx;
 import com.luxhouse.main.model.PatchDTO;
+import com.luxhouse.main.service.SessionService;
 import com.luxhouse.main.service.UserService;
 
 @RestController
@@ -34,6 +39,12 @@ public class UsersController {
 
     @Autowired
     UserService usersService;
+    
+    @Autowired
+    SessionService sessionService;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Api get all Users
@@ -167,6 +178,43 @@ public class UsersController {
 
         return getLastUsers();
     }
+    
+    @PostMapping("/changepassword")
+    public APIResponse changePassword(@RequestBody Map<String, String> objMap) {
+        
+        APIResponse response = new APIResponse();
+        
+        String password = passwordEncoder.encode(objMap.get("currencePassword"));
+        String new_password = objMap.get("newPassword");
+        
+        Users users = (Users) sessionService.get("loginUser");
+        if (users == null) {
+            response.setStatus(401);
+            response.setData("Vui lòng đăng nhập.");
+            response.setError("Please login!");
+            return response;
+        }
+        
+        Users user = usersService.findById(users.getId()).get();
+        System.out.println(new_password);
+        System.out.println("pasword data: " +user.getPassword());
+        System.out.println("Password hien tai: " + password);
+
+        
+        if (user.getPassword().equals(password)) {
+            response.setStatus(200);
+            user.setPassword(passwordEncoder.encode(new_password));
+            
+            usersService.save(user);
+            
+            response.setData("Đổi mật khẩu thành công!");
+        }else {
+            response.setStatus(104);
+            response.setData("Mật khẩu không đúng!");
+        }
+
+        return response;
+    }
 
     /**
      * Api update item
@@ -178,6 +226,20 @@ public class UsersController {
      */
     @PutMapping("/update")
     public Users updateUsers(@RequestBody Users Users) {
+        
+        Users user = (Users) sessionService.get("loginUser");
+        if (user == null) return user;
+        String password = usersService.findById(user.getId()).get().getPassword();
+        
+        Users.setPassword(password);
+        Users.setUsername(user.getUsername());
+        Users.setEmail(user.getEmail());
+        Users.setPhone(user.getPhone());
+        Users.setRoles(user.getRoles());
+        
+        boolean status = true;
+        
+        Users.setStatus(status);
 
         usersService.save(Users);
 

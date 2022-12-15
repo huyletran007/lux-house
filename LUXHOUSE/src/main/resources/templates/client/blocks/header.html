@@ -39,7 +39,7 @@
                                     <a th:if="${#request.remoteUser == null}" href="/users/login">Đăng nhập</a>
                                     <a th:if="${#request.remoteUser != null}" href="/account/profile">Tài khoản</a>
                                     <a th:if="${#request.remoteUser != null}" href="/account/logout">Đăng xuất</a>
-                                    <a href="#">Kiểm tra đơn hàng</a>
+                                    <a href="${userLogin}">Kiểm tra đơn hàng</a>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,8 @@
             </nav>
         </div>
     </div>
-    <div style="display: none;" id="userId">[[${#request.remoteUser}]]</div>
+    <div th:if="${UserDataRoot}" style="display: none;" id="userId">[[${UserDataRoot.id}]]</div>
+    
 </div>
 <!-- <input th:if="${#request.remoteUser}" type="hidden" id="idCustomer" th:value="${#request.remoteUser.id}"> -->
 <!-- End Header -->

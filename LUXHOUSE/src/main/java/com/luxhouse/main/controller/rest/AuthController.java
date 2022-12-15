@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.luxhouse.main.common.APIResponse;
 import com.luxhouse.main.domain.Roles;
 import com.luxhouse.main.domain.Users;
 import com.luxhouse.main.model.LoginDTO;
 import com.luxhouse.main.model.SignUpDTO;
 import com.luxhouse.main.repository.RoleRepository;
 import com.luxhouse.main.repository.UserRepository;
+import com.luxhouse.main.service.SessionService;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,16 +40,46 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private SessionService  sessionService;
 
     @PostMapping("/signin")
-    public Map<String, String> authenticateUser(@RequestBody LoginDTO loginDto) {
+    public APIResponse authenticateUser(@RequestBody LoginDTO loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        Map<String, String> map = new HashMap<>();
-        map.put("success", "User signed-in successfully!");
-        return map;
+        String password = loginDto.getPassword();
+        String[] emails = loginDto.getUsernameOrEmail().split("@");
+
+        Users users = userRepository.findByEmailOrUsername(loginDto.getUsernameOrEmail(), emails[0]);
+
+        APIResponse response = new APIResponse();
+
+        if (users != null) {
+            Users userRp = users;
+
+            userRp.setPassword("");
+
+            response.setData(userRp);
+            response.setStatus(200);
+            
+            sessionService.set("loginUser", userRp);
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            response.setData("Login error");
+
+            response.setStatus(400);
+
+            response.setError("Email hoặc mật khẩu chưa chính xác.");
+        }
+
+        return response;
+
+//        Map<String, String> map = new HashMap<>();
+//        map.put("success", "User signed-in successfully!");
+//        return map;
         // {"data":""}
     }
 
@@ -68,8 +101,8 @@ public class AuthController {
             map.put("error", "Email đã tồn tại!.");
             return map;
         }
-        
-     // add check for phone exists in DB
+
+        // add check for phone exists in DB
         if (userRepository.existsByPhone(signUpDto.getPhone())) {
 //            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
             Map<String, String> map = new HashMap<>();
