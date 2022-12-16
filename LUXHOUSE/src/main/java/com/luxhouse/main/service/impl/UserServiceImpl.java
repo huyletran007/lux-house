@@ -8,12 +8,14 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.luxhouse.main.domain.Products;
 import com.luxhouse.main.domain.Users;
 import com.luxhouse.main.exception.NotFoundEx;
+import com.luxhouse.main.exception.UserNotFoundException;
 import com.luxhouse.main.repository.UserRepository;
 import com.luxhouse.main.service.UserService;
 
@@ -172,11 +174,11 @@ public class UserServiceImpl implements UserService{
               log.info("Updating full name");
               user.setFullname(value);
             }
-            
-            if (key.equalsIgnoreCase("password")) {
-                log.info("Updating password");
-                user.setPassword(passwordEncoder.encode(value));
-              }
+//            
+//            if (key.equalsIgnoreCase("password")) {
+//                log.info("Updating password");
+//                user.setPassword(passwordEncoder.encode(value));
+//              }
 //            if (key.equalsIgnoreCase("age")) {
 //              log.info("Updating age");
 //              user.setAge(Integer.parseInt(value));
@@ -188,5 +190,35 @@ public class UserServiceImpl implements UserService{
             throw new NotFoundEx("RESOURCE_NOT_FOUND");
           }
         }
+    
+    //
+    @Override
+	public void updateResetPassword(String token,String email) throws UserNotFoundException {
+    	Users users = userRepository.findByEmailForRestPasswordToken(email);
+    	
+    	if (users != null) {
+			users.setResetPasswordToken(token);
+			userRepository.save(users);
+		}else {
+			throw new UserNotFoundException("Could not find any customer with email " + email); 
+		}
+    }
+    
+    @Override
+	public Users getToken(String resetPasswordToken) {
+    	return userRepository.findByResetPasswordToken(resetPasswordToken);
+    }
+    
+    @Override
+	public void updatePassword(Users users, String newPassowrd) {
+//    	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    	
+    	String encodePassword = passwordEncoder.encode(newPassowrd);
+    	
+    	users.setPassword(encodePassword);
+    	users.setResetPasswordToken(null);
+    	
+    	userRepository.save(users);
+    }
  
 }

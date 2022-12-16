@@ -57,6 +57,9 @@ public class Users implements Serializable {
 
     @Column(columnDefinition = "nvarchar(500) null")
     private String address;
+    
+    @Column(name = "reset_password_token",columnDefinition = "varchar(50) null")
+    private String resetPasswordToken;
 
     private Boolean status;
 

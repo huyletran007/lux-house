@@ -25,6 +25,7 @@ CREATE TABLE users (
   type_img varchar(50) null,
   phone varchar(15) NOT NULL,
   [address] nvarchar(500) DEFAULT NULL,
+  reset_password_token varchar(50) NULL,
   [status] bit DEFAULT 1 NULL,
   [created_at] datetime NULL DEFAULT GETDATE(),
   [updated_at] datetime NULL DEFAULT GETDATE(),
