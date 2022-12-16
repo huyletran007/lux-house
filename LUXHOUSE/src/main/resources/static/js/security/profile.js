@@ -38,6 +38,9 @@ const luuProfile = () => {
 
 //change password
 function passwordInvalid() {
+    let currencePass = _$('#currencePass')
+    let newPass = _$('#newPass')
+    let confirmPass = _$('#confirmPass')
 
 }
 

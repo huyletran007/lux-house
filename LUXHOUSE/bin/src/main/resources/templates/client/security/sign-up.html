@@ -1,32 +1,34 @@
 <!-- Start main -->
     <!-- Start FORM-REGISTER -->
-    <div class="login container d-flex flex-wrap justify-content-center" style="margin-top: 80px;">
+    <div class="login container d-flex flex-wrap" style="margin-top: 80px;">
         <div class="left-login">
             <div class="login-box">
                 <h2>REGISTER</h2>
                 <form>
                     <div class="user-box">
-                        <input type="text" name="" required="">
-                        <label>FullName</label>
-                    </div>
-                    <div class="user-box">
-                        <input type="text" name="" required="">
+                        <input type="text" name="" required="Message" id="username">
                         <label>Username</label>
                     </div>
+
                     <div class="user-box">
-                        <input type="password" name="" required="">
+                        <input type="text" name="" required id="fullname">
+                        <label>FullName</label>
+                    </div>
+
+                    <div class="user-box">
+                        <input type="password" name="" required id="password">
                         <label>Password</label>
                     </div>
                     <div class="user-box">
-                        <input type="password" name="" required="">
+                        <input type="password" name="" required id="password2">
                         <label>Password confirm</label>
                     </div>
                     <div class="user-box">
-                        <input type="password" name="" required="">
+                        <input type="text" name="" required id="phone">
                         <label>Phone</label>
                     </div>
                     <div class="user-box">
-                        <input type="password" name="" required="">
+                        <input type="text" name="" required id="email">
                         <label>Email</label>
                     </div>
                     <!-- <div class="other-form">
@@ -43,7 +45,7 @@
                     </div>
                 </div> -->
                 </form>
-                <button type="button" class="btn1">SIGN UP</button>
+                <button type="button" class="btn1" onclick="signUp()">SIGN UP</button>
             </div>
         </div>
         <div class="right-login-1">
@@ -51,7 +53,7 @@
                 <img src="/image/Catalog_Desktop.jpg" alt="Snow" style="width:100%;">
                 <div class="centered">
                     <div class="login-gg-lable-dk">IF YOU GOT AN ACCOUNT</div>
-                    <a type="button" class="btn-dk-1 d-flex flex-wrap justify-content-center" href="/users/login">LOGIN NOW</a>
+                    <a type="button" class="btn-dk-1 flex-wrap" href="/users/login">LOGIN NOW</a>
                 </div>
             </div>
         </div>

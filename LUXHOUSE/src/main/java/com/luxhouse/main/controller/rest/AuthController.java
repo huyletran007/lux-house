@@ -1,12 +1,14 @@
 package com.luxhouse.main.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +42,8 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    
     
     @Autowired
     private SessionService  sessionService;
@@ -117,6 +121,7 @@ public class AuthController {
         user.setEmail(signUpDto.getEmail());
         user.setPhone(signUpDto.getPhone());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+        user.setGender(true);
 
         Roles roles = roleRepository.findByName("Users").get();
         user.setRoles(Collections.singleton(roles));

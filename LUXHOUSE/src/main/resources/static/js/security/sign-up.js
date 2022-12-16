@@ -41,7 +41,8 @@ const signUp = () => {
         username,
         password,
         email,
-        phone
+        phone,
+        gender: true
     }
     http.post('http://localhost:8080/api/auth/signup', data)
         .then(data => {

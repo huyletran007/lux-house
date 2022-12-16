@@ -1,66 +1,100 @@
-<div class="page-content page-container" id="page-content">
-  <div class="padding-profile">
-    <div class="row container d-flex justify-content-center">
-      <div class="profile container">
-        <div class="card user-card-full">
-          <div class="row m-l-0 m-r-0">
-            <div class="col-sm-4 bg-c-lite-green user-profile">
-              <div class="card-block text-center text-white">
-                <div class="m-b-25">
-                  <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius"
-                       alt="User-Profile-Image">
-                </div>
-                <h6 class="f-w-600">Toanlee</h6>
-                <p>Web Designer</p>
-                <i class="fa fa-edit" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class="col-sm-8">
-              <div class="card-block">
-                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">Họ và tên</p>
-                    <h6 class="text-muted f-w-400">Toàn lee</h6>
-                  </div>
-                  <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">Username</p>
-                    <h6 class="text-muted f-w-400">Toanlee</h6>
-                  </div>
-                  <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">Email</p>
-                    <h6 class="text-muted f-w-400">Toanlee@gmail.com</h6>
-                  </div>
-                  <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">Gender</p>
-                    <h6 class="text-muted f-w-400">nữ</h6>
-                  </div>
-                  <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">Phone</p>
-                    <h6 class="text-muted f-w-400">98979989898</h6>
-                  </div>
-                </div>
-                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Address</h6>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <p class="m-b-10 f-w-600">24/46 Lê Thị Hồng, P.7, Q.Gò</p>
-
-                  </div>
-
-                </div>
-                <ul class="social-link list-unstyled m-t-40 m-b-10">
-                  <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title=""
-                         data-original-title="facebook" data-abc="true"><i class="fab fa-facebook-f"></i></a></li>
-                  <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title=""
-                         data-original-title="twitter" data-abc="true"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                  <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title=""
-                         data-original-title="instagram" data-abc="true"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="profile-user-main">
+    <div class="profile-user-main-tilte">
+        <div>HỒ SƠ CỦA TÔI</div>
     </div>
-  </div>
+    <div class="profile-user-main-body">
+        <div class="row" id="profile-js">
+            <div class="col-8">
+                <form>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label tenDN">Tên đăng nhập</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="staticTDN"
+                                th:value="${UserDataRoot.username}">
+                            <div id="staticPas" style="display: none;"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label ten">Tên</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" style="border-radius: 0;" id="staticT"
+                                th:value="${UserDataRoot.fullname}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label tenDN">Email</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="staticEmail"
+                                th:value="${UserDataRoot.email}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label tenDN">Số điện thoại</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="staticSDT"
+                                th:value="${UserDataRoot.phone}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label tenDN">Giới tính</label>
+                        <div class="col-sm-9" style="margin-top: 8px;" id="staticGT">
+                            <input type="radio" id="nam" name="fav_language" th:value="1"
+                                th:checked="${UserDataRoot.gender}">
+                            <label for="html">Nam</label>
+                            <input type="radio" id="nu" name="fav_language" th:checked="${!UserDataRoot.gender}"
+                                th:value="0">
+                            <label for="css">Nữ</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label tenDN">Ngày sinh</label>
+                        <div class="col-sm-9" style="margin-top: 5px;">
+                            <input type="date" id="birthday" name="birthday" placeholder="dob"
+                                class="form-control form-control-md" th:value="${UserDataRoot.dob}">
+
+                        </div>
+                    </div>
+                </form>
+
+                <button type="button" class="btn btn-primary btnU" onclick="luuProfile()">Lưu</button>
+            </div>
+            <div class="col-4 userleft">
+                <div class="profile-main-img">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                        alt="" id="staticIMG">
+
+                </div>
+                <div class="btnIO1">
+                    <input type="file" class="btnIn" name="fileImg" id="fileImg"
+                        accept="image/png, image/jpg, image/jpeg" />
+                </div>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#fileImg').change(function () {
+                            showImageThunbnail(this);
+                        });
+
+                    });
+
+                    function showImageThunbnail(fileInput) {
+                        file = fileInput.files[0];
+                        reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            $('#staticIMG').attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                </script>
+            </div>
+        </div>
+
+
+    </div>
 </div>

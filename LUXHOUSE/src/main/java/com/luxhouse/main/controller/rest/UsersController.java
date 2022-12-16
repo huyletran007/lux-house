@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -45,6 +47,11 @@ public class UsersController {
     
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Bean
+    PasswordEncoder password_Encoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     /**
      * Api get all Users
@@ -184,7 +191,7 @@ public class UsersController {
         
         APIResponse response = new APIResponse();
         
-        String password = passwordEncoder.encode(objMap.get("currencePassword"));
+        String password = objMap.get("currencePassword");
         String new_password = objMap.get("newPassword");
         
         Users users = (Users) sessionService.get("loginUser");
@@ -196,12 +203,14 @@ public class UsersController {
         }
         
         Users user = usersService.findById(users.getId()).get();
+        
         System.out.println(new_password);
-        System.out.println("pasword data: " +user.getPassword());
-        System.out.println("Password hien tai: " + password);
+        System.out.println("pasword data: " + user.getPassword());
+        System.out.println("Password Nhap tu client: " + password);
+        System.out.println("pass new: " + passwordEncoder.encode(new_password));
 
         
-        if (user.getPassword().equals(password)) {
+        if (BCrypt.checkpw(password, user.getPassword()) == true) {
             response.setStatus(200);
             user.setPassword(passwordEncoder.encode(new_password));
             
