@@ -42,6 +42,8 @@ function passwordInvalid() {
     let newPass = _$('#newPass')
     let confirmPass = _$('#confirmPass')
 
+    
+
 }
 
 const changePassword = () => {
