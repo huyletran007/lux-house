@@ -1,1 +1,6 @@
-# lux-house
+Main funcion:
+ - Users:
+  +
+  +
+  +
+ - Admin:
