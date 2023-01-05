@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.luxhouse.main.common.APIResponse;
 import com.luxhouse.main.domain.Orders;
 import com.luxhouse.main.domain.Products;
+import com.luxhouse.main.domain.Users;
 import com.luxhouse.main.domain.Products;
 import com.luxhouse.main.service.ProductsService;
+import com.luxhouse.main.service.SessionService;
 
 @RestController
 @RequestMapping("/Product")
@@ -27,6 +30,8 @@ import com.luxhouse.main.service.ProductsService;
 public class ProductsController {
     @Autowired
     ProductsService productsService;
+    @Autowired
+    SessionService sessionService;
 
     /**
      * Api get all Products
@@ -150,11 +155,25 @@ public class ProductsController {
      * 
      */
     @PostMapping("/add")
-    public Products addProducts(@RequestBody Products Products) {
+    public APIResponse addProducts(@RequestBody Products Products) {
+    	
+    	APIResponse response = new APIResponse();
+    	
+    	Users userLogined = (Users) sessionService.get("loginAdmin", null); 
+    	
+    	if (userLogined == null) {
+    		response.setStatus(19);
+	        response.setError("Can not POST /add. Error code: 19");
+	        response.setData("Token đã hết hạn. Vui lòng đăng nhập lại.");
+	        
+	        return response;
+		}
 
         productsService.save(Products);
+        response.setData(getLastProducts());
+        response.setStatus(200);
 
-        return getLastProducts();
+        return response;
     }
 
     /**

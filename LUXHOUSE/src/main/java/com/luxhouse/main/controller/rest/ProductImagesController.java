@@ -2,6 +2,7 @@ package com.luxhouse.main.controller.rest;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.luxhouse.main.common.APIResponse;
 import com.luxhouse.main.domain.ProductImages;
+import com.luxhouse.main.domain.Products;
+import com.luxhouse.main.domain.Users;
 import com.luxhouse.main.service.ProductImagesService;
+import com.luxhouse.main.service.ProductsService;
+import com.luxhouse.main.service.SessionService;
 
 @RestController
 @RequestMapping("/ProductImages")
@@ -30,6 +36,12 @@ import com.luxhouse.main.service.ProductImagesService;
 public class ProductImagesController {
     @Autowired
     ProductImagesService productImagesService;
+    
+    @Autowired
+    SessionService sessionService;
+    
+    @Autowired
+    ProductsService productsService;
 
     /**
      * Api get all ProductImages
@@ -114,6 +126,29 @@ public class ProductImagesController {
         productImagesService.save(ProductImages);
 
         return getLastProductImages();
+    }
+    
+    @PostMapping("/adds")
+    public APIResponse addProductsImages(@RequestBody List<ProductImages> list) {
+    	
+    	APIResponse response = new APIResponse();
+    	
+    	Users userLogined = (Users) sessionService.get("loginAdmin", null);
+    	if (userLogined == null) {
+    		response.setStatus(19);
+            response.setError("Can not POST /add. Error code: 19");
+            response.setData("Token đã hết hạn. Vui lòng đăng nhập lại.");
+            
+            return response;
+		}
+    	
+    	for (ProductImages item : list) {
+    		productImagesService.save(item);
+		}
+    	response.setData("Upload hình ảnh thành công");
+        response.setStatus(200);
+        
+        return response;
     }
 
     /**

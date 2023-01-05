@@ -137,4 +137,10 @@ public class AuthServiceImpl implements AuthService {
     public <S extends Authorities> boolean exists(Example<S> example) {
         return authRepository.exists(example);
     }
+    
+    @Override
+    public List<Authorities> selectsByUserId(Long id) {
+        // TODO Auto-generated method stub
+        return authRepository.selectsByUserId(id);
+    }
 }

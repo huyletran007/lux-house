@@ -102,81 +102,139 @@
                                 </div>
 
                                 <div class="col-md-6 col-lg-6">
-                                    <div class="form-check">
+                                    <div class="form-check" th:if="${content.objs.product.id != -1}">
                                         <label>New</label><br />
                                         <label class="form-radio-label">
                                             <input class="form-radio-input" type="radio" name="optionsRadiosNew"
-                                                value="1"
-                                                th:checked="${content.objs.product.discontinued} ? 'checked' : 'unchecked'" id="is_new">
+                                                th:value="1" th:checked="${content.objs.product.is_new}" id="is_new">
                                             <span class="form-radio-sign">True</span>
                                         </label>
                                         <label class="form-radio-label ml-3">
                                             <input class="form-radio-input" type="radio" name="optionsRadiosNew"
-                                                value="0"
-                                                th:checked="${content.objs.product.discontinued} ? 'checked' : 'unchecked'" id="is_new">
+                                                th:value="0" th:checked="${!content.objs.product.is_new}" id="is_new">
                                             <span class="form-radio-sign">False</span>
                                         </label>
                                     </div>
 
-                                    <div class="form-check">
+                                    <div class="form-check" th:if="${content.objs.product.id != -1}">
                                         <label>Featured</label><br />
                                         <!-- <input th:checked="${content.objs.product.discontinued}" type="checkbox"  id="discontinued"> -->
                                         <label class="form-radio-label">
                                             <input class="form-radio-input" type="radio" name="optionsRadiosFeatured"
-                                                value="1" checked id="is_featured">
+                                                th:value="1" th:checked="${content.objs.product.is_featured}"
+                                                id="is_featured">
                                             <span class="form-radio-sign">True</span>
                                         </label>
                                         <label class="form-radio-label ml-3">
                                             <input class="form-radio-input" type="radio" name="optionsRadiosFeatured"
-                                                value="0" id="is_featured"
-                                                th:checked="${content.objs.product.is_featured} ? 'checked' : 'unchecked'">
+                                                th:value="0" id="is_featured"
+                                                th:checked="${!content.objs.product.is_featured}">
                                             <span class="form-radio-sign">False</span>
                                         </label>
                                     </div>
 
-                                    <div class="form-check">
+                                    <div class="form-check" th:if="${content.objs.product.id != -1}">
                                         <label>Status</label><br />
                                         <label class="form-radio-label">
                                             <input class="form-radio-input" type="radio" name="optionsRadiosStatus"
-                                                value="1"
-                                                th:checked="${content.objs.product.status} ? 'checked' : 'unchecked'">
+                                                th:value="1" th:checked="${content.objs.product.status}">
                                             <span class="form-radio-sign">True</span>
                                         </label>
                                         <label class="form-radio-label ml-3">
                                             <input class="form-radio-input" type="radio" name="optionsRadiosStatus"
-                                                value="0"
-                                                th:checked="${content.objs.product.status} ? 'checked' : 'unchecked'">
+                                                th:value="0" th:checked="${!content.objs.product.status}">
                                             <span class="form-radio-sign">False</span>
                                         </label>
                                     </div>
 
-                                    <div class="form-check">
+                                    <div class="form-check" th:if="${content.objs.product.id != -1}">
                                         <label>Discontinued</label><br />
                                         <label class="form-radio-label">
                                             <input class="form-radio-input" type="radio"
-                                                name="optionsRadiosDiscontinued" value="1"
-                                                th:checked="${content.objs.product.discontinued} ? 'checked' : 'unchecked'"
-                                                id="discontinued">
+                                                name="optionsRadiosDiscontinued" th:value="1"
+                                                th:checked="${content.objs.product.discontinued}" id="discontinued">
                                             <span class="form-radio-sign">True</span>
                                         </label>
                                         <label class="form-radio-label ml-3">
                                             <input class="form-radio-input" type="radio"
-                                                name="optionsRadiosDiscontinued" value="0"
-                                                th:checked="${content.objs.product.discontinued} ? 'checked' : 'unchecked'"
-                                                id="discontinued">
+                                                name="optionsRadiosDiscontinued" th:value="0"
+                                                th:checked="${!content.objs.product.discontinued}" id="discontinued">
                                             <span class="form-radio-sign">False</span>
                                         </label>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlFile1">Img main</label>
-                                        <input type="file" class="form-control-file" id="image"
-                                            th:value="${content.objs.product.image}">
+
+                                        <div class="container">
+                                            <ul>
+                                                <li>
+                                                    <i>Chọn 1 ảnh đại diện</i>
+                                                    <input type="text" id="imgMain" value="">
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <!-- <div class="row">
+                                            <div class="col-4">
+                                                <input type="file" class="form-control-file" id="imgMain" name="imgMain"
+                                                    th:value="${content.objs.product.image}"
+                                                    accept="image/png, image/jpg, image/jpeg">
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="showImgMain">
+                                                    <img src="https://i.ibb.co/2s5ZQWM/image.png" alt="" id="showIMG" class="img-fluid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $(document).ready(function () {
+                                                $('#imgMain').change(function () {
+                                                    showImageThunbnail(this);
+                                                });
+
+                                            });
+
+                                            function showImageThunbnail(fileInput) {
+                                                file = fileInput.files[0];
+                                                reader = new FileReader();
+
+                                                reader.onload = function (e) {
+                                                    $('#showIMG').attr('src', e.target.result);
+                                                };
+                                                reader.readAsDataURL(file);
+                                            }
+                                        </script> -->
+
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlFile1">list img</label>
-                                        <input type="file" class="form-control-file" id="image_list">
+                                        <label for="exampleFormControlFile1">List img</label>
+
+                                        <div class="container">
+                                            <ul>
+                                                <li>
+                                                    <i>Có thể chọn nhiều ảnh</i>
+                                                    <input type="text" id="imgList" value="">
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        
+
+                                        <!-- <input type="file" class="form-control-file" id="image_list">
+                                        <div class="row list-img-more">
+                                            <div class="col-3">1</div>
+                                            <div class="col-3">2</div>
+                                            <div class="col-3">3</div>
+                                            <div class="col-3">4</div>
+                                        </div>
+                                        <div class="row list-img-more">
+                                            <div class="col-3">1</div>
+                                            <div class="col-3">2</div>
+                                            <div class="col-3">3</div>
+                                            <div class="col-3">4</div>
+                                        </div> -->
                                     </div>
                                 </div>
 
@@ -185,6 +243,7 @@
                         <div class="card-action label-align-center">
                             <button class="btn btn-success" th:if="${content.objs.product.id < 0}"
                                 onclick="addProduct()">Add</button>
+
                             <button class="btn btn-danger" th:if="${content.objs.product.id > 0}"
                                 onclick="editProduct()">Edit</button>
                         </div>

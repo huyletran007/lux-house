@@ -38,8 +38,9 @@
                                 <div class="dropdown-content">
                                     <a th:if="${#request.remoteUser == null}" href="/users/login">Đăng nhập</a>
                                     <a th:if="${#request.remoteUser != null}" href="/account/profile">Tài khoản</a>
+                                    <a th:if="${AdminDataRoot != null}" href="/admin">Admin</a>
                                     <a th:if="${#request.remoteUser != null}" href="/account/logout">Đăng xuất</a>
-                                    <a href="${userLogin}">Kiểm tra đơn hàng</a>
+                                    <a th:href="${loginUser}">Kiểm tra đơn hàng</a>
                                 </div>
                             </div>
                         </div>

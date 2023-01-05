@@ -14554,3 +14554,27 @@ body[data-background-color=dark] .board {
    background: -webkit-linear-gradient(legacy-direction(-45deg), #e80a15, #f25961) !important;
    background: linear-gradient(-45deg, #e80a15, #f25961) !important
 }
+
+/* add product */
+.showImgMain {
+   height: 400px;
+   width: 400px;
+   border: 3px solid black;
+   border-radius: 5px;
+   padding: 3px;
+}
+
+.showImgMain img {
+   height: 390px;
+   width: 400px;
+}
+
+.list-img-more div {
+   margin-top: 5px;
+}
+
+.list-img-more div {
+   border: 1px solid black;
+   height: 200px;
+   width: 200px;
+}

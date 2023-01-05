@@ -34,7 +34,7 @@ public class ProductAdminController extends com.luxhouse.main.controller.Control
     @GetMapping("/table")
     public String layoutTable(Model model) {
         dataLayoutMaster.setView("admin/products/table");
-        dataLayoutMaster.setJsList(Arrays.asList("/admin/product/table.js"));
+        dataLayoutMaster.setJsList(Arrays.asList("/admin/product/table.js", "/admin/js/jquery.uploader.min.js"));
 
         objsDataLayout.put("key", "value");
 
@@ -50,9 +50,11 @@ public class ProductAdminController extends com.luxhouse.main.controller.Control
         Products product = new Products();
         product.setCategoryProducts(new CategoryProducts());
         product.setId(-1L);
+        
         objsDataLayout.put("product", product);
+        
         dataLayoutMaster.setView("admin/products/edit");
-        dataLayoutMaster.setJsList(Arrays.asList("/admin/product/edit.js"));
+        dataLayoutMaster.setJsList(Arrays.asList("/admin/product/edit.js", "/admin/js/jquery.uploader.min.js"));
 
         objsDataLayout.put("key", "value");
 
@@ -79,7 +81,7 @@ public class ProductAdminController extends com.luxhouse.main.controller.Control
 
         dataLayoutMaster.setView("admin/products/edit");
 
-        dataLayoutMaster.setJsList(Arrays.asList("/admin/product/edit.js"));
+        dataLayoutMaster.setJsList(Arrays.asList("/admin/product/edit.js", "/admin/js/jquery.uploader.min.js"));
 
         dataLayoutMaster.setObjs(objsDataLayout);
 

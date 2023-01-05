@@ -8,7 +8,7 @@ const loadProductAd = (data) => {
     let warpProductAd = _$('#loadPr-js')
     let html = ``
 
-    data = data.reverse()
+    // data = data.reverse()
     data.forEach(e => {
         html += `<tr>
         <td><img src="/image/${e.image}" alt="" style="height: 150px;"></td>

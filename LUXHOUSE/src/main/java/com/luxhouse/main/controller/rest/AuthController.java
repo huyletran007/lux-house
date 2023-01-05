@@ -16,16 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.luxhouse.main.common.APIResponse;
+import com.luxhouse.main.domain.Authorities;
 import com.luxhouse.main.domain.Roles;
 import com.luxhouse.main.domain.Users;
 import com.luxhouse.main.model.LoginDTO;
 import com.luxhouse.main.model.SignUpDTO;
 import com.luxhouse.main.repository.RoleRepository;
 import com.luxhouse.main.repository.UserRepository;
+import com.luxhouse.main.service.AuthService;
 import com.luxhouse.main.service.SessionService;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -43,8 +46,8 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    
-    
+    @Autowired
+    private AuthService authService; 
     @Autowired
     private SessionService  sessionService;
 
@@ -59,8 +62,20 @@ public class AuthController {
         Users users = userRepository.findByEmailOrUsername(loginDto.getUsernameOrEmail(), emails[0]);
 
         APIResponse response = new APIResponse();
+        
+        List<Authorities> list = authService.selectsByUserId(users.getId());
+        
+        boolean isAdmin = list.stream().anyMatch(e -> e.getRoles().getId() == 1);
+        
+        if(users == null) {
+        	response.setData("Login error");
 
-        if (users != null) {
+            response.setStatus(400);
+
+            response.setError("Email hoặc mật khẩu chưa chính xác.");
+        }
+
+        if (!isAdmin) {
             Users userRp = users;
 
             userRp.setPassword("");
@@ -72,12 +87,20 @@ public class AuthController {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } else {
-            response.setData("Login error");
+        	
+        	Users userRp = users;
 
-            response.setStatus(400);
+            userRp.setPassword("");
 
-            response.setError("Email hoặc mật khẩu chưa chính xác.");
+            response.setData(userRp);
+            response.setStatus(200);
+            
+            sessionService.set("loginUser", userRp);
+            sessionService.set("loginAdmin", userRp);
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+
 
         return response;
 

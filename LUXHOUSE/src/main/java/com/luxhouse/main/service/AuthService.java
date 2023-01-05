@@ -59,4 +59,6 @@ public interface AuthService {
     <S extends Authorities> long count(Example<S> example);
 
     <S extends Authorities> boolean exists(Example<S> example);
+
+	List<Authorities> selectsByUserId(Long id);
 }
